@@ -14,8 +14,8 @@
 typedef struct
 {
 	void *start_address;
-	int16_t width;
-	int16_t height;
+	uint32_t width;
+	uint32_t height;
 } gui_layer_t;
 
 typedef struct
@@ -28,6 +28,7 @@ typedef struct
 color_t hsv2rgb(float h, float s, float v);
 
 void display_init(void);
+void display_deinit(void);
 
 void lcd_fill(void *dst, uint16_t xSize, uint16_t ySize, uint16_t OffLine, uint32_t color);
 void lcd_fill_full(gui_layer_t *layer, uint32_t color);

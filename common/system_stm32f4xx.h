@@ -84,6 +84,13 @@ extern const uint8_t  APBPrescTable[8];     /*!< APB prescalers table values */
   */
   
 extern void SystemInit(void);
+void NMI_Handler(void);
+void OTG_FS_IRQHandler(void);
+void OTG_HS_WKUP_IRQHandler(void);
+void OTG_HS_IRQHandler(void);
+void OTG_HS_EP1_IN_IRQHandler(void);
+void OTG_HS_EP1_OUT_IRQHandler(void);
+
 /**
   * @}
   */

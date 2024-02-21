@@ -16,10 +16,16 @@ bool g_stay_in_boot = false;
 
 volatile uint64_t system_time = 0;
 
-static volatile int boot_delay = BOOT_DELAY;
+static volatile uint32_t boot_delay = BOOT_DELAY;
 static int32_t prev_systick = 0;
 
-config_entry_t g_device_config[] = {};
+uint8_t tmp = 0;
+config_entry_t g_device_config[] = {
+	{"0", 1, 0, &tmp}
+	// {"can_id", sizeof(pending_can_node_id), 0, &pending_can_node_id},
+	// {"can_baud", sizeof(pending_can_baud), 0, &pending_can_baud},
+	// {"hb_prod_ms", sizeof(OD_PERSIST_COMM.x1017_producerHeartbeatTime), 0, &OD_PERSIST_COMM.x1017_producerHeartbeatTime},
+};
 const uint32_t g_device_config_count = sizeof(g_device_config) / sizeof(g_device_config[0]);
 
 uint32_t g_uid[3];
@@ -38,7 +44,7 @@ void delay_ms(volatile uint32_t delay_ms)
 	}
 }
 
-void main(void)
+__attribute__((noreturn)) void main(void)
 {
 	RCC->AHB1ENR |= RCC_AHB1ENR_CRCEN;
 

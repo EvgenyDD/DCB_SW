@@ -1,3 +1,4 @@
+#include "sram.h"
 #include "platform.h"
 
 #define SDRAM_MODEREG_BURST_LENGTH_1 ((uint16_t)0x0000)

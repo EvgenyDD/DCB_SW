@@ -122,7 +122,7 @@ color_t hsv2rgb(float h, float s, float v)
 	return out;
 }
 
-void dma2d_start(void)
+static void dma2d_start(void)
 {
 	while((LTDC->CDSR & LTDC_CDSR_VSYNCS) == 0U)
 		asm("nop");

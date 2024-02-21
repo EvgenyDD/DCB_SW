@@ -23,7 +23,13 @@ uint32_t g_uid[3];
 volatile uint64_t system_time = 0;
 static int32_t prev_systick = 0;
 
-config_entry_t g_device_config[] = {};
+uint8_t tmp = 0;
+config_entry_t g_device_config[] = {
+	{"0", 1, 0, &tmp}
+	// {"can_id", sizeof(pending_can_node_id), 0, &pending_can_node_id},
+	// {"can_baud", sizeof(pending_can_baud), 0, &pending_can_baud},
+	// {"hb_prod_ms", sizeof(OD_PERSIST_COMM.x1017_producerHeartbeatTime), 0, &OD_PERSIST_COMM.x1017_producerHeartbeatTime},
+};
 const uint32_t g_device_config_count = sizeof(g_device_config) / sizeof(g_device_config[0]);
 
 void delay_ms(volatile uint32_t delay_ms)
@@ -63,7 +69,7 @@ volatile GPIO_TypeDef *_GPIOK;
 volatile FMC_Bank5_6_TypeDef *_FMC_Bank5_6;
 volatile LTDC_Layer_TypeDef *_LTDC_Layer1;
 
-void main(void)
+__attribute__((noreturn)) void main(void)
 {
 	_RCC = RCC;
 	_LTDC = LTDC;
