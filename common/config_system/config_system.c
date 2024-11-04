@@ -158,7 +158,7 @@ config_sts_t config_write_storage(void)
 		// first calc (new) total size & check it will fit the FLASH
 		for(uint32_t offset_buf = 4; offset_buf < old_data_size + 4;)
 		{
-			const char *entry_name = &buf_old_data[offset_buf];
+			const char *entry_name = (const char *)&buf_old_data[offset_buf];
 			if(*entry_name == 0)
 			{
 				offset_buf++;
@@ -202,7 +202,7 @@ config_sts_t config_write_storage(void)
 		// write non-native entries
 		for(uint32_t offset_buf = 4; offset_buf < old_data_size + 4;)
 		{
-			char *entry_name = &buf_old_data[offset_buf];
+			char *entry_name = (const char *)&buf_old_data[offset_buf];
 			if(*entry_name == 0)
 			{
 				offset_buf++;

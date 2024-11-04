@@ -63,7 +63,7 @@ $(BINARY_SIGNED): $(BINARY) $(SIGN)
 #####################
 
 flash: $(BINARY_SIGNED)
-	openocd -d0 -f ../target/stm32f4xx.cfg -c "program $< 0x08000000 verify reset exit" 
+	@openocd -d0 -f ../target/stm32f4xx.cfg -c "program $< 0x08000000 verify reset exit"
 
 debug:
 	@echo "file $(EXECUTABLE)" > .gdbinit

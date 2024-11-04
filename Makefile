@@ -26,6 +26,7 @@ CXXFLAGS += -Werror
 LDFLAGS  += -specs=nano.specs
 LDFLAGS  += -Wl,--gc-sections
 LDFLAGS  += -Wl,--print-memory-usage
+LDFLAGS  += -u _printf_float
 
 EXT_LIBS +=c m nosys
 
@@ -106,10 +107,10 @@ clean_ext_targets:
 #####################
 
 flash: $(BINARY_SIGNED)
-	openocd -d0 -f target/stm32f4xx.cfg -c "program $< 0x08020000 verify reset exit" 
+	@openocd -d0 -f target/stm32f4xx.cfg -c "program $< 0x08020000 verify reset exit"
 
 flash_full: $(BINARY_MERGED)
-	openocd -d0 -f target/stm32f4xx.cfg -c "program $< 0x08000000 verify reset exit"
+	@openocd -d0 -f target/stm32f4xx.cfg -c "program $< 0x08000000 verify reset exit"
 
 program: $(BINARY_SIGNED)
 	@usb_dfu_flasher $< DCB

@@ -103,10 +103,10 @@ $(EXT_MAKE_TARGETS):
 #####################
 
 flash: $(BINARY_SIGNED)
-	openocd -d0 -f ../target/stm32f4xx.cfg -c "program $< 0x08004000 verify reset exit"
+	@openocd -d0 -f ../target/stm32f4xx.cfg -c "program $< 0x08004000 verify reset exit"
 
 flash_all: $(BINARY_MERGED)
-	openocd -d0 -f ../target/stm32f4xx.cfg -c "program $< 0x08000000 verify reset exit" 
+	@openocd -d0 -f ../target/stm32f4xx.cfg -c "program $< 0x08000000 verify reset exit"
 
 program: $(BINARY_SIGNED)
 	@usb_dfu_flasher $< DCB boot
