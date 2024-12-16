@@ -1,5 +1,6 @@
 #include "adc.h"
 #include "config_system.h"
+#include "console.h"
 #include "crc.h"
 #include "display.h"
 #include "fw_header.h"
@@ -7,7 +8,8 @@
 #include "prof.h"
 #include "ret_mem.h"
 #include "sram.h"
-#include "usbd_proto_core.h"
+#include "usb_hw.h"
+#include "usbd_core_cdc.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -20,16 +22,12 @@ bool g_stay_in_boot = false;
 
 uint32_t g_uid[3];
 
-volatile uint64_t system_time = 0;
+volatile uint32_t system_time_ms = 0;
 static int32_t prev_systick = 0;
 
 uint8_t tmp = 0;
 config_entry_t g_device_config[] = {
-	{"0", 1, 0, &tmp}
-	// {"can_id", sizeof(pending_can_node_id), 0, &pending_can_node_id},
-	// {"can_baud", sizeof(pending_can_baud), 0, &pending_can_baud},
-	// {"hb_prod_ms", sizeof(OD_PERSIST_COMM.x1017_producerHeartbeatTime), 0, &OD_PERSIST_COMM.x1017_producerHeartbeatTime},
-};
+	{"0", 1, 0, &tmp}};
 const uint32_t g_device_config_count = sizeof(g_device_config) / sizeof(g_device_config[0]);
 
 void delay_ms(volatile uint32_t delay_ms)
@@ -41,15 +39,8 @@ void delay_ms(volatile uint32_t delay_ms)
 	for(;;)
 	{
 		start += (uint32_t)prof_mark(&mark_prev);
-		if(start >= time_limit)
-			return;
+		if(start >= time_limit) return;
 	}
-}
-
-static void end_loop(void)
-{
-	delay_ms(2000);
-	platform_reset();
 }
 
 static uint32_t get_random_color(void)
@@ -130,7 +121,7 @@ __attribute__((noreturn)) void main(void)
 
 		platform_watchdog_reset();
 
-		system_time += diff_ms;
+		system_time_ms += diff_ms;
 
 		adc_track();
 
@@ -154,4 +145,9 @@ __attribute__((noreturn)) void main(void)
 			lcd_rect_fill(&display_layers[0], x, y, xl, yl, get_random_color());
 		}
 	}
+}
+
+void usbd_cdc_rx(const uint8_t *data, uint32_t size)
+{
+	console_cb(data, size);
 }

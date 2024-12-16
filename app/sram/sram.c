@@ -13,13 +13,13 @@
 #define SDRAM_MODEREG_WRITEBURST_MODE_PROGRAMMED ((uint16_t)0x0000)
 #define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE ((uint16_t)0x0200)
 
-static void __Delay(__IO uint32_t nCount)
-{
-	__IO uint32_t index = 0;
-	for(index = (100000 * nCount); index != 0; index--)
-	{
-	}
-}
+// static void __Delay(__IO uint32_t nCount)
+// {
+// 	__IO uint32_t index = 0;
+// 	for(index = (100000 * nCount); index != 0; index--)
+// 	{
+// 	}
+// }
 
 static void SDRAM_Initialization_Sequence(FMC_SDRAMCommandTypeDef *Command)
 {

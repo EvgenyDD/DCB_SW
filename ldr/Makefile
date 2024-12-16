@@ -30,7 +30,9 @@ LDFLAGS  += -Wl,--print-memory-usage
 
 EXT_LIBS +=c nosys
 
-PPDEFS += USE_STDPERIPH_DRIVER STM32F429_439xx STM32F429xx FW_HEADER_REDUCED FW_TYPE=FW_LDR CFG_SYSTEM_SAVES_NON_NATIVE_DATA=1 DEV=\"DCB_LDR\"
+PPDEFS += USE_STDPERIPH_DRIVER STM32F429_439xx STM32F429xx HSE_VALUE=12000000 FW_HEADER_REDUCED FW_TYPE=FW_LDR CFG_SYSTEM_SAVES_NON_NATIVE_DATA=1 DEV=\"DCB_LDR\"
+PPDEFS += USBD_CLASS_DFU
+PPDEFS += DFU_READS_CFG_SECTION
 
 INCDIR += .
 INCDIR += ../common
@@ -109,7 +111,7 @@ flash_all: $(BINARY_MERGED)
 	@openocd -d0 -f ../target/stm32f4xx.cfg -c "program $< 0x08000000 verify reset exit"
 
 program: $(BINARY_SIGNED)
-	@usb_dfu_flasher $< DCB boot
+	@usb_dfu_flasher w b $< DCB
 
 debug:
 	@echo "file $(EXECUTABLE)" > .gdbinit
