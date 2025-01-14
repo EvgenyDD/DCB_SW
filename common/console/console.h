@@ -3,11 +3,11 @@
 
 #include <stdint.h>
 
-#define DT_FMT_MS "%03d.%03d"
+#define DT_FMT_MS "%03ld.%03ld"
 #define DT_DATA_MS(x) ((x) / 1000U), ((x) % 1000U)
 
 void console_str(const char *str);
-void _console_print(const char *fmt, ...);
+void _console_print(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 void _console_print_prefix(void);
 
 #define console_print(...)           \

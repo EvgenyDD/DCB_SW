@@ -149,5 +149,5 @@ __attribute__((noreturn)) void main(void)
 
 void usbd_cdc_rx(const uint8_t *data, uint32_t size)
 {
-	console_cb(data, size);
+	console_cb((const char *)data, size);
 }
